@@ -1,6 +1,7 @@
 package com.dreamk.mysqlservertest.utils;
 
-import java.sql.Connection;
+import org.mariadb.jdbc.Connection;
+
 import java.sql.DriverManager;
 
 /**
@@ -26,8 +27,7 @@ public class JDBCUtils {
         try {
             Class.forName(driver);// 动态加载类
             // 尝试建立到给定数据库URL的连接
-            connection = DriverManager.getConnection(
-                    "jdbc:mariadb://" + ip + ":" + port + "/" + dbName, user, password);
+            connection = (Connection) DriverManager.getConnection("jdbc:mariadb://" + ip + ":" + port + "/" + dbName, user, password);;
         } catch (Exception e) {
             e.printStackTrace();
         }

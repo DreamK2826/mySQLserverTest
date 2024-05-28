@@ -10,14 +10,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import com.dreamk.mysqlservertest.utils.JDBCUtils;
+import org.mariadb.jdbc.Statement;
+import org.mariadb.jdbc.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity {
-    Button[] buttons = {findViewById(R.id.btn_test_connection),findViewById(R.id.btn_register),
-            findViewById(R.id.btn_login),findViewById(R.id.btn_check)};
-    EditText[] editTexts = {findViewById(R.id.et_sqlAddress),findViewById(R.id.et_sqlPort),
-            findViewById(R.id.et_userName),findViewById(R.id.et_password),
-            findViewById(R.id.et_id_check)};
-    TextView[] textViews = {findViewById(R.id.tv_username1),findViewById(R.id.tv_isDel1)};
+    Button btn_test_connection,btn_register,btn_login,btn_check;
+
+    EditText et_sqlAddress,et_sqlPort,et_userName,et_password,et_id_check;
+
+    TextView tv_username1,tv_isDel1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +35,68 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        findView();
+        setListener();
 
+    }
 
+    private void findView() {
+        btn_test_connection = findViewById(R.id.btn_test_connection);
+        btn_register = findViewById(R.id.btn_register);
+        btn_login = findViewById(R.id.btn_login);
+        btn_check = findViewById(R.id.btn_check);
+
+        et_sqlAddress = findViewById(R.id.et_sqlAddress);
+        et_sqlPort = findViewById(R.id.et_sqlPort);
+        et_userName = findViewById(R.id.et_userName);
+        et_password = findViewById(R.id.et_password);
+        et_id_check = findViewById(R.id.et_id_check);
+
+        tv_username1 = findViewById(R.id.tv_username1);
+        tv_isDel1 = findViewById(R.id.tv_isDel1);
+    }
+
+    private void setListener(){
+        btn_check.setOnClickListener(v -> {
+            new Thread(() -> {
+                String id_et = et_id_check.getText().toString();
+                String ip_et = et_sqlAddress.getText().toString();
+                String port_et_str = et_sqlPort.getText().toString();
+                int port_et = 3306;
+                if(!port_et_str.isEmpty()){
+                    port_et = Integer.parseInt(port_et_str);
+                }
+                if(id_et.isEmpty()){
+                    id_et = "1";
+                }
+                String sqlUser = "userAndroid",sqlPassword = "2826DreamK",dbName = "mytest1";
+                ResultSet resultSet;
+                try{
+                    Connection connection = JDBCUtils.getConnection(sqlUser,sqlPassword,dbName,ip_et,port_et);
+                    Statement statement;
+                    String sql1 = "select * from mytest1.test1 where id = " + id_et;
+                    if(connection != null){
+                        //TODO:
+                        statement = connection.createStatement();
+                        resultSet = statement.executeQuery(sql1);
+                        while (resultSet.next()) {
+                            String a = resultSet.getString("username");
+                            String b = resultSet.getString("isDel");
+
+                            runOnUiThread(() -> {
+                                tv_username1.setText(a);
+                                tv_isDel1.setText(b);
+                            });
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+
+            }).start();
+
+        });
     }
 
 
