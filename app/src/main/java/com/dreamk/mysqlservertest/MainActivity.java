@@ -11,10 +11,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.dreamk.mysqlservertest.utils.JDBCUtils;
-import org.mariadb.jdbc.Statement;
-import org.mariadb.jdbc.Connection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 
 public class MainActivity extends AppCompatActivity {
     Button btn_test_connection,btn_register,btn_login,btn_check;
@@ -57,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListener(){
-        btn_check.setOnClickListener(v -> {
+
+        btn_check.setOnClickListener(v ->{
             new Thread(() -> {
                 String id_et = et_id_check.getText().toString();
                 String ip_et = et_sqlAddress.getText().toString();
@@ -67,18 +71,19 @@ public class MainActivity extends AppCompatActivity {
                     port_et = Integer.parseInt(port_et_str);
                 }
                 if(id_et.isEmpty()){
-                    id_et = "1";
+                    id_et=("1");
                 }
                 String sqlUser = "userAndroid",sqlPassword = "2826DreamK",dbName = "mytest1";
                 ResultSet resultSet;
                 try{
-                    Connection connection = JDBCUtils.getConnection(sqlUser,sqlPassword,dbName,ip_et,port_et);
-                    Statement statement;
-                    String sql1 = "select * from mytest1.test1 where id = " + id_et;
+                    Connection connection = JDBCUtils.getConnection(sqlUser,sqlPassword,dbName,ip_et, port_et);
+                    String sql1 = "select * from mytest1.test1 where id = (?)";
                     if(connection != null){
-                        //TODO:
-                        statement = connection.createStatement();
-                        resultSet = statement.executeQuery(sql1);
+
+                        PreparedStatement ps = connection.prepareStatement(sql1);
+                        ps.setInt(1,Integer.parseInt(id_et));
+                        resultSet = ps.executeQuery();
+
                         while (resultSet.next()) {
                             String a = resultSet.getString("username");
                             String b = resultSet.getString("isDel");
@@ -91,12 +96,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    throw new RuntimeException(e);
+//                throw new RuntimeException(e);
                 }
 
             }).start();
 
         });
+
     }
 
 
