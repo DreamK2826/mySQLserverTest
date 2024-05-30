@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.EditText;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 Connection connection = JDBCUtils.getConnection(sqlUser, sqlPassword, dbName, ip_et, port_et);
                 runOnUiThread(() -> {
                     if (connection == null) {
-                        ToastUtil.show(this, "connection is null!", Gravity.BOTTOM);
+                        ToastUtil.show(this, "connection is null!", Gravity.TOP);
                     } else {
                         ToastUtil.show(this, "connection is OK!", Gravity.TOP);
                         try {
@@ -171,10 +172,11 @@ public class MainActivity extends AppCompatActivity {
                         ps.close();
                         connection.close();
                     } else {
-                        runOnUiThread(() -> ToastUtil.show(this, "无法连接至mySQL！", Gravity.TOP));
+                        runOnUiThread(() -> ToastUtil.show(this, "无法连接至mySQL！", Gravity.BOTTOM));
                     }
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Log.e("SQL:", "btn_check.setListener: ", e);
+
                     throw new RuntimeException(e);
                 }
             }).start();
@@ -235,19 +237,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start());
 
-        btn_login.setOnClickListener(v -> {
-            new Thread(() -> {
-                String sqlUser = "userAndroid";
-                String sqlPassword = "2826DreamK";
-                String dbName = "mytest1";
-                String ip_et = et_sqlAddress.getText().toString();
-                String port_et_str = et_sqlPort.getText().toString();
-                int port_et = 3306;
-                if (!port_et_str.isEmpty()) {
-                    port_et = Integer.parseInt(port_et_str);
-                }
-                setSPuser();
-                Connection connection = JDBCUtils.getConnection(sqlUser, sqlPassword, dbName, ip_et, port_et);
+        btn_login.setOnClickListener(v -> new Thread(() -> {
+            String sqlUser = "userAndroid";
+            String sqlPassword = "2826DreamK";
+            String dbName = "mytest1";
+            String ip_et = et_sqlAddress.getText().toString();
+            String port_et_str = et_sqlPort.getText().toString();
+            int port_et = 3306;
+            if (!port_et_str.isEmpty()) {
+                port_et = Integer.parseInt(port_et_str);
+            }
+            setSPuser();
+            Connection connection = JDBCUtils.getConnection(sqlUser, sqlPassword, dbName, ip_et, port_et);
+            if (!(connection == null)) {
                 try {
                     //查询是否有一样用户名和密码并且isDel != 1 的用户
 //                    connection.setAutoCommit(false);
@@ -275,9 +277,11 @@ public class MainActivity extends AppCompatActivity {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-            }).start();
+            } else {
+                runOnUiThread(() -> ToastUtil.show(this, "Connection is Null", Gravity.CENTER));
 
+            }
 
-        });
+        }).start());
     }
 }
