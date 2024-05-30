@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">mySQLserverTest</string>
+    <string name="n">NULL</string>
+    <string name="check">查询</string>
+    <string name="idl">id</string>
+    <string name="passwordl">password</string>
+    <string name="usernamel">username</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="test">测试</string>
+    <string name="portl">port</string>
+    <string name="database_ip_l">Database IP</string>
+    <string name="ip_0">192.168.200.215</string>
+    <string name="port_0">3306</string>
 </resources>

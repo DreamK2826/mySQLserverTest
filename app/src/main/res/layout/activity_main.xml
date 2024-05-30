@@ -14,8 +14,8 @@
         android:layout_marginStart="11dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:hint="Database IP"
-        android:text="192.168.200.215"
+        android:hint="@string/database_ip_l"
+        android:text="@string/ip_0"
         app:layout_constraintEnd_toStartOf="@+id/btn_test_connection"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -24,10 +24,11 @@
         android:id="@+id/et_sqlPort"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="port"
+        android:layout_marginBottom="80dp"
+        android:hint="@string/portl"
         android:inputType="number"
-        android:text="3306"
+        android:text="@string/port_0"
+        app:layout_constraintBottom_toTopOf="@+id/et_userName"
         app:layout_constraintEnd_toEndOf="@+id/btn_test_connection"
         app:layout_constraintStart_toStartOf="@+id/btn_test_connection"
         app:layout_constraintTop_toBottomOf="@+id/btn_test_connection" />
@@ -36,10 +37,10 @@
         android:id="@+id/btn_test_connection"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="3dp"
         android:layout_marginEnd="16dp"
-        android:text="测试"
-        app:layout_constraintBottom_toBottomOf="@+id/et_sqlAddress"
+        android:layout_marginBottom="8dp"
+        android:text="@string/test"
+        app:layout_constraintBottom_toTopOf="@+id/et_sqlPort"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/et_sqlAddress"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -49,108 +50,121 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="测试"
+        android:layout_marginBottom="3dp"
+        android:text="@string/test"
+        app:layout_constraintBottom_toTopOf="@+id/btn_test_connection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="37dp"
-        android:layout_marginBottom="21dp"
-        android:text="注册"
-        app:layout_constraintBottom_toTopOf="@+id/materialDivider"
-        app:layout_constraintEnd_toStartOf="@+id/btn_login" />
 
-    <Button
-        android:id="@+id/btn_login"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="318dp"
-        android:text="登录"
-        app:layout_constraintEnd_toEndOf="@+id/btn_check"
-        app:layout_constraintStart_toStartOf="@+id/btn_check"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/materialDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_password">
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            tools:layout_editor_absoluteX="98dp"
+            tools:layout_editor_absoluteY="318dp" />
+
+        <Space
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            tools:layout_editor_absoluteX="222dp"
+            tools:layout_editor_absoluteY="318dp" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/et_userName"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="115dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="116dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
-        android:hint="username"
+        android:hint="@string/usernamel"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/btn_login"
-        app:layout_constraintEnd_toEndOf="@+id/et_password"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintBottom_toTopOf="@+id/et_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_sqlPort" />
 
     <EditText
         android:id="@+id/et_password"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="139dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="139dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="41dp"
         android:ems="10"
-        android:hint="password"
+        android:hint="@string/passwordl"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/et_id_check"
-        app:layout_constraintEnd_toEndOf="@+id/btn_login"
-        app:layout_constraintTop_toBottomOf="@+id/et_sqlAddress" />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/et_userName"
+        app:layout_constraintTop_toBottomOf="@+id/et_userName" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider"
         android:layout_width="0dp"
-        android:layout_height="10dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginBottom="21dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="33dp"
         app:layout_constraintBottom_toTopOf="@+id/et_id_check"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
-
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <EditText
         android:id="@+id/et_id_check"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="40dp"
-        android:hint="id              "
-        app:layout_constraintBottom_toBottomOf="@+id/btn_check"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="18dp"
+        android:hint="@string/idl"
+        app:layout_constraintBottom_toTopOf="@+id/tv_username1"
+        app:layout_constraintEnd_toStartOf="@+id/btn_check"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_check" />
+        app:layout_constraintTop_toBottomOf="@+id/materialDivider" />
 
     <Button
         android:id="@+id/btn_check"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="94dp"
-        android:text="查询"
-        app:layout_constraintEnd_toEndOf="@+id/materialDivider"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        android:layout_height="0dp"
+        android:layout_marginEnd="161dp"
+        android:text="@string/check"
+        app:layout_constraintBottom_toBottomOf="@+id/et_id_check"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_id_check"
+        app:layout_constraintTop_toTopOf="@+id/et_id_check" />
 
     <TextView
         android:id="@+id/tv_username1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginBottom="12dp"
-        android:text="NULL"
+        android:layout_marginBottom="11dp"
+        android:text="@string/n"
         app:layout_constraintBottom_toTopOf="@+id/tv_isDel1"
-        app:layout_constraintStart_toStartOf="@+id/et_id_check" />
+        app:layout_constraintStart_toStartOf="@+id/tv_isDel1"
+        app:layout_constraintTop_toBottomOf="@+id/et_id_check" />
 
     <TextView
         android:id="@+id/tv_isDel1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="57dp"
-        android:text="NULL"
-        app:layout_constraintEnd_toStartOf="@+id/tv_username1"
-        app:layout_constraintStart_toStartOf="@+id/tv_username1"
-        app:layout_constraintTop_toBottomOf="@+id/et_id_check" />
+        android:layout_marginBottom="72dp"
+        android:text="@string/n"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_id_check"
+        app:layout_constraintTop_toBottomOf="@+id/tv_username1" />
 </androidx.constraintlayout.widget.ConstraintLayout>
